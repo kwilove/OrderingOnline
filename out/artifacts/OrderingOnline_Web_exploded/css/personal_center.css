@@ -1,0 +1,25 @@
+.head-fix {
+    width: 100%;
+    height: 40px;
+    font-size: 18px;
+    font-weight: bolder;
+    vertical-align: middle;
+    line-height: 40px;
+}
+.head-fix span, .head-fix a {
+    margin: 0 20px;
+}
+.personal_info {
+    padding: 30px 15px;
+}
+.personal_info > span {
+    line-height: 70px;
+}
+.personal_info span p {
+    margin-bottom: 5px;
+    line-height: 20px;
+}
+.personal-photo {
+    width: 70px;
+    height: 70px;
+}
