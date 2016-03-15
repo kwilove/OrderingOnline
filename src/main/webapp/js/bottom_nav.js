@@ -1,7 +1,7 @@
 /**
  * Created by Administrator on 2015/12/3.
  */
-$(function(){
+$(function () {
     var bottom_nav_a = $("#bottom-nav a");
     $(bottom_nav_a).removeClass("text-main");
     var current_url = window.location.pathname;
