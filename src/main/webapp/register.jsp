@@ -80,11 +80,11 @@
 							</div>
 							<div class="form-group">
 								<div class="label">
-									<label for="type"> 用户类型</label>
+									<label for="type"> 头像上传</label>
 								</div>
 								<div class="field">
-									<input type="text" class="input" id="type" name="type"
-										size="30" placeholder="" />
+									<input type="file" class="input" id="headphoto" name="headphoto"
+									 placeholder="" />
 								</div>
 							</div>
 						</div>
