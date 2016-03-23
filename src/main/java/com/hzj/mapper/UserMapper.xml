@@ -5,17 +5,23 @@
 
 	<!-- 新增 -->
 	<insert id="save" parameterType="pd">
-		insert into TB_USER(
+		insert into tb_user(
 		USERNAME,
 		PASSWORD,
+		REALNAME,
+		SEX,
 		PHONE,
 		ADDRESS,
+		HEADPHOTO,
 		USER_ID
 		) values (
 		#{username},
 		#{password},
+		#{realname},
+		#{sex},
 		#{phone},
 		#{address},
+		#{headphoto},
 		#{user_id}
 		)
 	</insert>

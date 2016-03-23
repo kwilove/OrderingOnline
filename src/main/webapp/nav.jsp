@@ -12,7 +12,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
 	String path = request.getContextPath();
-	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort()
+			+ path + "/";
 %>
 <html>
 <head>
@@ -28,8 +29,22 @@
 </style>
 </head>
 <body>
+
+	<div id="shoppingCart-panel">
+		<div class="dialog">
+			<div class="dialog-head">
+				<span class="close rotate-hover"></span><strong>购物车</strong>
+			</div>
+			<div class="dialog-body">哦欧！您的购物车是空的，请先选择您喜欢的美食！</div>
+			<div class="dialog-foot">
+				<button class="button dialog-close">我再多买点</button>
+				<a href="order.jsp" class="button bg-green"> 我现在就想吃</a>
+			</div>
+		</div>
+	</div>
+
 	<div class="top hidden-l">
-		<div class="layout bg hidden-l">
+		<div class="layout bg hidden-l hidden-s">
 			<div class="container-layout height-big bg-green bg-inverse">
 				<span class="float-right padding-large-right margin-right"> <a
 					href="#" class="win-homepage">设为首页</a> | <a href="#"
@@ -48,8 +63,8 @@
 					id="header-menu">
 					<div class="xs8 xm8 xb6">
 						<ul class="nav nav-menu nav-inline nav-pills nav-big">
-							<li class="active"><a href="">首页订餐</a></li>
-							<li><a href="#">我的订单</a></li>
+							<li class="home"><a href="">首页订餐</a></li>
+							<li class="orderCenter"><a href="order/list.do">我的订单</a></li>
 							<!-- 							<li><a href="#"></a></li> -->
 							<%--<li><a href="#">更多<span class="arrow"></span></a>--%>
 							<%--<ul class="drop-menu">--%>
@@ -121,23 +136,31 @@
 				<button class="button icon-navicon" data-target="#nav-link"></button>
 				<ul class="nav nav-navicon text-center" id="nav-link"
 					style="height: 100%;">
-					<li class="tips" data-toggle="hover" data-place="left"
-						data-style="bg-gray bg-inverse text-center text-large radius"
-						data-width="100px" title="我的订单"><a href="#"
+					<li class="tips" data-title="我的订单"><a href="#"
 						class="toolbar-btn icon-file-text text-big"></a></li>
-					<li><a href="#" class="toolbar-cartbtn icon-shopping-cart">购物车</a></li>
-					<li class="tips" data-toggle="hover" data-place="left"
-						data-style="bg-gray bg-inverse text-center text-large radius"
-						data-width="100px" title="我的信息"><a href="#"
+					<li><span class="totalFoodCount  badge radius-circle"
+						style="position: relative; top: 30px; right: 10px;">0</span> <a
+						href="javascript:void;" id="shoppingCart-right"
+						class="toolbar-cartbtn icon-shopping-cart dialogs"
+						data-toggle="click" data-target="#shoppingCart-panel"
+						data-mask="1" data-width="50%">购物车</a></li>
+					<li class="tips" data-title="我的信息"><a href="#"
 						class="icon-envelope text-big"></a></li>
-					<li class="tips" data-toggle="hover" data-place="left"
-						data-style="bg-gray bg-inverse text-center text-large radius"
-						data-width="100px" title="浏览历史"><a href="#"
+					<li class="tips" data-title="浏览历史"><a href="#"
 						class="icon-history text-big"></a></li>
 				</ul>
 			</div>
 			<a class="button win-backtop bg-inverse icon-arrow-up">返回顶部</a>
 		</div>
 	</div>
+	<script type="text/javascript">
+		$(function() {
+			$(".tips").on("mouseover", function() {
+				layer.tips($(this).data("title"), this, {
+					tips : [ 4, '#78BA32' ]
+				});
+			})
+		})
+	</script>
 </body>
 </html>

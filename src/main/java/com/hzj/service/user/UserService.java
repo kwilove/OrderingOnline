@@ -20,6 +20,7 @@ public class UserService {
 	 * 新增
 	 */
 	public void save(PageData pd) throws Exception {
+		System.out.println(pd.toString());
 		dao.save("UserMapper.save", pd);
 	}
 

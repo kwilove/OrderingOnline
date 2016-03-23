@@ -13,6 +13,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>用户登录</title>
 <%@include file="common.jsp"%>
+<style type="text/css">
+ .radio .sex-man.active {
+ 	color: white;
+ 	background-color: #0ae;
+}
+ .radio .sex-woman.active {
+ 	color: white;
+ 	background-color: #f60;
+}
+</style>
 </head>
 <body>
 	<div class="container">
@@ -62,6 +72,31 @@
 							</div>
 							<div class="form-group">
 								<div class="label">
+									<label for="realname"> 真实姓名</label>
+								</div>
+								<div class="field">
+									<input type="text" class="input" id="realname" name="realname"
+										size="30" placeholder="" />
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="label">
+									<label for="sex"> 性别</label>
+								</div>
+								<div class="field">
+									<div class="button-group radio">
+										<label class="button border-sub sex-man active">
+											<input name="sex-radio" value="1" type="radio" checked="checked">男性
+										</label>
+										<label class="button border-yellow sex-woman">
+											<input name="sex-radio" value="0" type="radio">女性
+										</label>
+									</div>
+									<input type="hidden" class="input" name="sex" value="1"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<div class="label">
 									<label for="phone"> 手机号</label>
 								</div>
 								<div class="field">
@@ -80,7 +115,7 @@
 							</div>
 							<div class="form-group">
 								<div class="label">
-									<label for="type"> 头像上传</label>
+									<label for="headphoto"> 头像上传</label>
 								</div>
 								<div class="field">
 									<input type="file" class="input" id="headphoto" name="headphoto"
@@ -96,5 +131,12 @@
 			</div>
 		</div>
 	</div>
+	<script type="text/javascript">
+		$("input[type='radio']").on("click",function(){
+// 			$(this).parents(".radio").find("input[type='radio']").attr("checked",false);
+// 			$(this).attr("checked",true);
+			$("input[name='sex']").val($(this).val());
+		})
+	</script>
 </body>
 </html>

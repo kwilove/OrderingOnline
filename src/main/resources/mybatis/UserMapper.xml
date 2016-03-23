@@ -15,14 +15,14 @@
 			HEADPHOTO,	
 			USER_ID
 		) values (
-			#{USERNAME},	
-			#{PASSWORD},	
-			#{REALNAME},	
-			#{SEX},	
-			#{PHONE},	
-			#{ADDRESS},	
-			#{HEADPHOTO},	
-			#{USER_ID}
+			#{username},	
+			#{password},	
+			#{realname},	
+			#{sex},	
+			#{phone},	
+			#{address},	
+			#{headphoto},	
+			#{user_id}
 		)
 	</insert>
 	
@@ -31,7 +31,7 @@
 	<delete id="delete" parameterType="pd">
 		delete from TB_USER
 		where 
-			USER_ID = #{USER_ID}
+			USER_ID = #{user_id}
 	</delete>
 	
 	
@@ -39,16 +39,16 @@
 	<update id="edit" parameterType="pd">
 		update  TB_USER
 			set 
-				USERNAME = #{USERNAME},
-				PASSWORD = #{PASSWORD},
-				REALNAME = #{REALNAME},
-				SEX = #{SEX},
-				PHONE = #{PHONE},
-				ADDRESS = #{ADDRESS},
-				HEADPHOTO = #{HEADPHOTO},
+				USERNAME = #{username},
+				PASSWORD = #{password},
+				REALNAME = #{realname},
+				SEX = #{sex},
+				PHONE = #{phone},
+				ADDRESS = #{address},
+				HEADPHOTO = #{headphoto},
 			USER_ID = USER_ID
 			where 
-				USER_ID = #{USER_ID}
+				USER_ID = #{user_id}
 	</update>
 	
 	
@@ -66,7 +66,7 @@
 		from 
 			TB_USER
 		where 
-			USER_ID = #{USER_ID}
+			USER_ID = #{username}
 	</select>
 	
 	

@@ -32,7 +32,7 @@ public class LoginController extends BaseController {
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		PageData currentUser = null;
-		if ((currentUser = userService.isExist(pd)) != null) {
+		if ((currentUser = userService.findById(pd)) != null) {
 			HttpSession session = request.getSession(false);
 			session.setAttribute(Const.SESSION_USER, currentUser);
 			mv.addObject("msg", "success");

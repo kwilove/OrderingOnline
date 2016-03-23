@@ -33,7 +33,6 @@ import com.hzj.util.PageData;
 @RequestMapping(value = "/user")
 public class UserController extends BaseController {
 
-	String menuUrl = "user/list.do"; // 菜单地址(权限用)
 	@Resource(name = "userService")
 	private UserService userService;
 
@@ -46,7 +45,8 @@ public class UserController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-		pd.put("user_id", this.get32UUID()); // 主键
+//		pd.put("user_id", this.get32UUID()); // 主键
+		pd.put("user_id", pd.getString("username")); // 主键
 		userService.save(pd);
 		mv.addObject("msg", "success");
 		mv.setViewName("login");

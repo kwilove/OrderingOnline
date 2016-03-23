@@ -277,5 +277,8 @@
 			</div>
 		</div>
 	</div>
+	<script>
+	$(".nav li.home").addClass("active");
+	</script>
 </body>
 </html>

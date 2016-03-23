@@ -9,6 +9,7 @@
 			RESTAURANTID,	
 			USERID,	
 			CREATETIME,	
+			FOOD,
 			TOTALPRICE,	
 			CONTACT,	
 			PHONE,	
@@ -18,17 +19,18 @@
 			STATUS,	
 			ORDER_ID
 		) values (
-			#{RESTAURANTID},	
-			#{USERID},	
-			#{CREATETIME},	
-			#{TOTALPRICE},	
-			#{CONTACT},	
-			#{PHONE},	
-			#{ADDRESS},	
-			#{ARRIVETIME},	
-			#{EVALUATION},	
-			#{STATUS},	
-			#{ORDER_ID}
+			#{restaurantid},	
+			#{userid},	
+			#{createtime},
+			#{food},
+			#{totalprice},
+			#{contact},	
+			#{phone},	
+			#{address},	
+			#{arrivetime},	
+			#{evaluation},	
+			#{status},	
+			#{order_id}
 		)
 	</insert>
 	
@@ -48,6 +50,7 @@
 				RESTAURANTID = #{RESTAURANTID},
 				USERID = #{USERID},
 				CREATETIME = #{CREATETIME},
+				FOOD = #{FOOD},
 				TOTALPRICE = #{TOTALPRICE},
 				CONTACT = #{CONTACT},
 				PHONE = #{PHONE},
@@ -60,6 +63,14 @@
 				ORDER_ID = #{ORDER_ID}
 	</update>
 	
+	<!-- 修改订单状态 -->
+	<update id="updateStatus" parameterType="pd">
+		update  TB_ORDER
+			set 
+				STATUS = #{STATUS}
+			where 
+				ORDER_ID = #{ORDER_ID}
+	</update>
 	
 	<!-- 通过ID获取数据 -->
 	<select id="findById" parameterType="pd" resultType="pd">
@@ -67,6 +78,7 @@
 			RESTAURANTID,	
 			USERID,	
 			CREATETIME,	
+			FOOD,	
 			TOTALPRICE,	
 			CONTACT,	
 			PHONE,	
@@ -81,6 +93,31 @@
 			ORDER_ID = #{ORDER_ID}
 	</select>
 	
+	<!-- 通过当前用户ID获取数据 -->
+	<select id="findByUserId" parameterType="pd" resultType="pd">
+		select 
+			a.RESTAURANTID,	
+			a.USERID,	
+			a.CREATETIME,
+			a.FOOD,		
+			a.TOTALPRICE,	
+			a.CONTACT,	
+			a.PHONE,	
+			a.ADDRESS,	
+			a.ARRIVETIME,	
+			a.EVALUATION,	
+			a.STATUS,	
+			a.ORDER_ID,
+			r.RESTAURANTNAME
+		from 
+			TB_ORDER a 
+		inner join 
+			TB_RESTAURANT r
+		on 
+			a.RESTAURANTID = r.RESTAURANT_ID
+		and
+			a.USERID = #{userId }
+	</select>
 	
 	<!-- 列表 -->
 	<select id="datalistPage" parameterType="page" resultType="pd">
@@ -88,6 +125,7 @@
 				a.RESTAURANTID,	
 				a.USERID,	
 				a.CREATETIME,	
+				a.FOOD,		
 				a.TOTALPRICE,	
 				a.CONTACT,	
 				a.PHONE,	
@@ -106,6 +144,7 @@
 				a.RESTAURANTID,	
 				a.USERID,	
 				a.CREATETIME,	
+				a.FOOD,		
 				a.TOTALPRICE,	
 				a.CONTACT,	
 				a.PHONE,	
@@ -113,9 +152,12 @@
 				a.ARRIVETIME,	
 				a.EVALUATION,	
 				a.STATUS,	
-				a.ORDER_ID
+				a.ORDER_ID,
+				r.RESTAURANTNAME,
 		from 
 				TB_ORDER a
+		where
+				a.USERID = #{userId }
 	</select>
 	
 	<!-- 批量删除 -->

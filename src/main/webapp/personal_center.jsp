@@ -1,35 +1,22 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Administrator
-  Date: 2015/12/3
-  Time: 13:36
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:include page="nav.jsp"></jsp:include>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%
+	String path = request.getContextPath();
+	String basePath = request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + path + "/";
+%>
+<!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="renderer" content="webkit">
-    <title>个人中心</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/pintuer.css">
-    <!-- 只有使用字体图标时才需要加载 Font-Awesome -->
-    <link href="http://cdn.bootcss.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/css/style.css">
-    <script src="/js/jquery.js"></script>
-    <script src="/js/pintuer.js"></script>
-    <script src="/js/respond.js"></script>
-    <script src="/js/layer/layer.js"></script>
-    <script src="/js/common.js"></script>
-    <link type="image/x-icon" href="http://www.pintuer.com/favicon.ico" rel="shortcut icon"/>
-    <link href="http://www.pintuer.com/favicon.ico" rel="bookmark icon"/>
-    <link rel="stylesheet" href="/css/personal_center.css">
-    <script src="/js/layer/layer.js"></script>
+<base href="<%=basePath%>">
+<meta charset="utf-8" />
+<title>个人中心</title>
+<%@include file="common.jsp"%>
 </head>
 <body>
+<jsp:include page="nav.jsp"></jsp:include>
+<%--     <%@include file="nav.jsp" %> --%>
 <div class="layout">
     <div class="line">
         <div class="mobile  xl12 xs12 hidden-b hidden-m" style="padding-bottom: 50px;">
@@ -39,9 +26,9 @@
                 <a class="btn-config icon icon-cog float-right"></a>
                 <a class="icon icon-bell float-right"></a>
             </div>
-            <a class="personal_info bg-green bg-inverse xl12" href="../../personal/personal_info.jsp">
+            <a class="personal_info bg-green bg-inverse xl12" href="personal/personal_info.jsp">
                 <span class="xl3">
-                    <img class="personal-photo  radius-circle" src="/images/user/face.jpg" alt="">
+                    <img class="personal-photo  radius-circle" src="images/user/face.jpg" alt="">
                 </span>
                 <span class="xl5 padding">
                     <p class="text-big">19211470762</p>

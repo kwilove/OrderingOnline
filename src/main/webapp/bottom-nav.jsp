@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="fixed-bottom border xl12 hidden-s hidden-m hidden-b" id="bottom-nav"
-     style="width: 100%;background: #efefef;z-index: 1;">
+     style="width: 100%;background: #efefef;z-index: 999;">
     <ul class="nav nav-menu nav-inline nav-justified text-center text-gray">
         <li class="xl4">
             <a href="index" class="text-gray">
@@ -23,13 +23,13 @@
             </a>
         </li>
         <li class="xl4">
-            <a href="#" class="text-gray">
+            <a href="order_records.jsp" class="text-gray">
                 <div class="icon-list text-large"></div>
                 订单
             </a>
         </li>
         <li class="xl4">
-            <a href="personal_center" class="text-gray">
+            <a href="personal_center.jsp" class="text-gray">
                 <div class="icon-user text-large"></div>
                 我的
             </a>

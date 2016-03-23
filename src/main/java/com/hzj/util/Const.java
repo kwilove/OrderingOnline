@@ -8,6 +8,7 @@ import org.springframework.context.ApplicationContext;
  * @author:fh
  */
 public class Const {
+	public static final String FENGEFU = ",&,";            //统一分隔符
     public static final String SESSION_SECURITY_CODE = "sessionSecCode";
     public static final String SESSION_USER = "sessionUser";
     public static final String SESSION_ROLE_RIGHTS = "sessionRoleRights";

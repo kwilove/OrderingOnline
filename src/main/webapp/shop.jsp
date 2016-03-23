@@ -27,11 +27,31 @@
 	color: red;
 	font-size: 20px;
 }
+#shoppingCart-botton {
+	filter:alpha(opacity=90);  
+	-moz-opacity:0.9;
+    -khtml-opacity: 0.9;
+    opacity: 0.9;
+}
+.totalPrice {
+	margin-left: 20px;
+	font-size: 30px;
+}
 </style>
 </head>
 <body>
 	<div class="layout">
+	
 		<jsp:include page="nav.jsp"></jsp:include>
+		
+		<div class="layout bg hidden-b hidden-m hidden-s fixed" style="z-index: 999;">
+			<div class="container-layout height-large bg-main bg-inverse border border-bottom">
+				<span class="float-right margin-right icon-search text-large"
+					onclick="prompt('请输入:')"></span>
+				<span class="icon-arrow-left text-large  margin-left" onclick="history.go(-1)"></span>
+			</div>
+		</div>
+		
 		<div class="shop" id="">
 			<div class="media-inline container">
 				<%
@@ -60,6 +80,15 @@
 				%>
 			</div>
 		</div>
+		
+		<div id="shoppingCart-botton" class="layout bg hidden-b hidden-m fixed-bottom" style="z-index: 999;">
+			<div class="container-layout height-large bg-black bg-inverse">
+				<span class="icon-shopping-cart text-large  margin-left"></span>
+				<span class="totalFoodCount  badge radius-circle" style="position: relative;right: 5px;top: -10px;">0</span>
+				<span class="totalPrice">￥85</span>
+				<a href="order.jsp" class="button button-big bg-main radius-none float-right" href="">去结算</a>
+			</div>
+		</div>
 	</div>
 	<script type="text/javascript">
 		$(function(){
@@ -67,18 +96,37 @@
 				$(this).find(".food-name").addClass("text-main");
 			}).on("mouseout",function(){
 				$(this).find(".food-name").removeClass("text-main");
-			})
-			$(".add-to-cart").on("click",function(){
+			});
+			$("body").on("click",".add-to-cart",function(){
 				var content = "<button class=\"minus text-black radius-rounded\">-</button>";
-				content += "<span class=\"count\" style=\"font-size:15px;margin: 5px;\">10</span>";
+				content += "<span class=\"foodCount\" style=\"font-size:15px;margin: 5px;\">1</span>";
 				content += "<button class=\"plus text-black radius-rounded\">+</button>";
-				$(this).removeClass("bg-main text-white").html(content);
-			})
-			$("body").on("click",".minus",function(){
-				console.log($(this).siblings("span.count").text());
-// 				$(this).siblings("span.count").html(1);
-				$("span.count").text("1");
-			})
+				$(this).removeClass("bg-main text-white").parent("div").html(content);
+				$(".totalFoodCount").addClass("bg-green").each(function(){
+					$(this).text(parseInt($(this).text()) + 1);
+				});
+			}).on("click",".minus",function(e){
+				e.stopPropagation()
+				var foodCount = $(this).siblings("span.foodCount").text();
+				if(foodCount > 1){
+					$(this).siblings("span.foodCount").html(parseInt(foodCount) - 1);
+				}else{
+					$(this).parent("div").html('<button class="button bg-main text-white radius-rounded add-to-cart">加入购物车</button>');
+				}
+				$(".totalFoodCount").each(function(){
+					$(this).text(parseInt($(this).text()) - 1);
+				});
+				if(parseInt($(".totalFoodCount").text()) == 0){
+					$(".totalFoodCount").removeClass("bg-green");
+				}
+			}).on("click",".plus",function(e){
+				e.stopPropagation()
+				var foodCount = parseInt($(this).siblings("span.foodCount").text());
+				$(this).siblings("span.foodCount").text(foodCount + 1);
+				$(".totalFoodCount").each(function(){
+					$(this).text(parseInt($(this).text()) + 1);
+				});
+			});
 		})
 	</script>
 </body>

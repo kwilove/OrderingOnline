@@ -49,48 +49,48 @@ html #layui_layer_skinlayerextcss {
     background-color: #fff;
 }
 
-.layui-layer-tab .layui-layer-title {
-    padding-left: 0;
-    border-bottom: 1px solid #ccc;
-    background-color: #eee;
-    overflow: visible;
-}
+    .layui-layer-tab .layui-layer-title {
+        padding-left: 0;
+        border-bottom: 1px solid #ccc;
+        background-color: #eee;
+        overflow: visible;
+    }
 
-.layui-layer-tab .layui-layer-title span {
-    position: relative;
-    float: left;
-    min-width: 80px;
-    max-width: 260px;
-    padding: 0 20px;
-    text-align: center;
-    cursor: default;
-    overflow: hidden;
-}
+        .layui-layer-tab .layui-layer-title span {
+            position: relative;
+            float: left;
+            min-width: 80px;
+            max-width: 260px;
+            padding: 0 20px;
+            text-align: center;
+            cursor: default;
+            overflow: hidden;
+        }
 
-.layui-layer-tab .layui-layer-title span.layui-layer-tabnow {
-    height: 43px;
-    border-left: 1px solid #ccc;
-    border-right: 1px solid #ccc;
-    background-color: #fff;
-    z-index: 10;
-}
+            .layui-layer-tab .layui-layer-title span.layui-layer-tabnow {
+                height: 43px;
+                border-left: 1px solid #ccc;
+                border-right: 1px solid #ccc;
+                background-color: #fff;
+                z-index: 10;
+            }
 
-.layui-layer-tab .layui-layer-title span:first-child {
-    border-left: none;
-}
+            .layui-layer-tab .layui-layer-title span:first-child {
+                border-left: none;
+            }
 
 .layui-layer-tabmain {
     line-height: 24px;
     clear: both;
 }
 
-.layui-layer-tabmain .layui-layer-tabli {
-    display: none;
-}
+    .layui-layer-tabmain .layui-layer-tabli {
+        display: none;
+    }
 
-.layui-layer-tabmain .layui-layer-tabli.xubox_tab_layer {
-    display: block;
-}
+        .layui-layer-tabmain .layui-layer-tabli.xubox_tab_layer {
+            display: block;
+        }
 
 .xubox_tabclose {
     position: absolute;
@@ -105,19 +105,19 @@ html #layui_layer_skinlayerextcss {
     background: url(default/xubox_loading1.gif) center center no-repeat #000;
 }
 
-.layui-layer-photos .layui-layer-content {
-    overflow: hidden;
-    text-align: center;
-}
+    .layui-layer-photos .layui-layer-content {
+        overflow: hidden;
+        text-align: center;
+    }
 
-.layui-layer-photos .layui-layer-phimg img {
-    position: relative;
-    width: 100%;
-    display: inline-block;
-    *display: inline;
-    *zoom: 1;
-    vertical-align: top;
-}
+    .layui-layer-photos .layui-layer-phimg img {
+        position: relative;
+        width: 100%;
+        display: inline-block;
+        *display: inline;
+        *zoom: 1;
+        vertical-align: top;
+    }
 
 .layui-layer-imgbar,
 .layui-layer-imguide {
@@ -142,10 +142,10 @@ html #layui_layer_skinlayerextcss {
     _background-position: -70px -5px;
 }
 
-.layui-layer-imgprev:hover {
-    background-position: -33px -5px;
-    _background-position: -120px -5px;
-}
+    .layui-layer-imgprev:hover {
+        background-position: -33px -5px;
+        _background-position: -120px -5px;
+    }
 
 .layui-layer-imgnext {
     right: 10px;
@@ -154,10 +154,10 @@ html #layui_layer_skinlayerextcss {
     _background-position: -70px -50px;
 }
 
-.layui-layer-imgnext:hover {
-    background-position: -33px -50px;
-    _background-position: -120px -50px;
-}
+    .layui-layer-imgnext:hover {
+        background-position: -33px -50px;
+        _background-position: -120px -50px;
+    }
 
 .layui-layer-imgbar {
     position: absolute;
@@ -167,7 +167,7 @@ html #layui_layer_skinlayerextcss {
     height: 32px;
     line-height: 32px;
     background-color: rgba(0, 0, 0, .8);
-    background-color: #000 \9;
+    background-color: #000\9;
     filter: Alpha(opacity=80);
     color: #fff;
     overflow: hidden;
@@ -188,10 +188,10 @@ html #layui_layer_skinlayerextcss {
     color: #fff;
 }
 
-.layui-layer-imgtit a:hover {
-    color: #fff;
-    text-decoration: underline;
-}
+    .layui-layer-imgtit a:hover {
+        color: #fff;
+        text-decoration: underline;
+    }
 
 .layui-layer-imgtit em {
     padding-left: 10px;
