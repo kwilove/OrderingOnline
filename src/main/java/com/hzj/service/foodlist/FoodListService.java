@@ -46,6 +46,13 @@ public class FoodListService {
 	}
 	
 	/*
+	*通过餐厅ID获取食物列表
+	*/
+	public List<PageData> findByRestaurantId(PageData pd)throws Exception{
+		return (List<PageData>)dao.findForList("FoodListMapper.findByRestaurantId", pd);
+	}
+	
+	/*
 	*列表(全部)
 	*/
 	public List<PageData> listAll(PageData pd)throws Exception{

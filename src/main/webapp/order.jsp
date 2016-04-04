@@ -40,17 +40,17 @@
 				<form action="order/save.do" method="post" class="form-x">
 					<div class="panel">
 						<div class="panel-head bg-main">
-							<span class="icon-arrow-left text-big  margin" onclick="history.go(-1)"></span>
+							<a class="icon-arrow-left text-big  margin"
+								href="foodlist/listByRestaurantId.do?restaurantid=${sessionScope.sessionRestaurant}"></a>
 							<strong class="hidden-s hidden-l">订单详情</strong>
 						</div>
 						<div class="panel-body" style="padding: 30px;">
 							<img src="images/bishengke.jpg" width="50px" height="50px" class="radius-circle float-left hidden-s hidden-l" />
 							<img src="images/bishengke.jpg" width="50px" height="50px" class="radius-circle float-right hidden-b hidden-m" style="" />
 							<div class="order-detail float-left">
-								<div><span class="margin-big-left">芝士条</span><span style="margin-left: 200px;">×5</span></div>
-								<div><span class="margin-big-left">芝士条</span><span style="margin-left: 200px;">×5</span></div>
-								<div><span class="margin-big-left">芝士条</span><span style="margin-left: 200px;">×5</span></div>
-<!-- 								<label>×</label> -->
+								<c:forEach items="${sessionScope.sessionCart}" var="sc" varStatus="vs">
+									<div><span class="margin-big-left">${sc.FOODNAME }</span><span style="margin-left: 200px;">×${sc.FOOD_COUNT }</span></div>
+								</c:forEach>
 							</div>
 							<hr class="bg-main" />
 							<div class="form-group">
@@ -90,11 +90,12 @@
 <!-- 							</div> -->
 							<div class="form-group">
 								<div class="totalprice">
-									总价:<span>￥85</span>
+									总价:<span>￥${sessionScope.sessionTotalPrice }</span>
 									<input type="hidden" name="userid" value="${sessionScope.sessionUser.USER_ID}">
+									<input type="hidden" name="restaurantid" value="${sessionScope.sessionRestaurant}">
 									<input type="hidden" name="totalprice" value="85">
 									<input type="hidden" name="status" value="1">
-									<input type="text" name="createtime" value="<fmt:formatDate value="<%=new Date() %>" pattern="yyyy-MM-dd HH:mm:ss"/>">
+									<input type="hidden" name="createtime" value="<fmt:formatDate value="<%=new Date() %>" pattern="yyyy-MM-dd HH:mm:ss"/>">
 								</div>
 							</div>
 						</div>

@@ -10,10 +10,16 @@ import org.springframework.context.ApplicationContext;
 public class Const {
 	public static final String FENGEFU = ",&,";            //统一分隔符
     public static final String SESSION_SECURITY_CODE = "sessionSecCode";
-    public static final String SESSION_USER = "sessionUser";
+    public static final String SESSION_USER = "sessionUser";			//用户信息
+    public static final String SESSION_REST = "sessionRestaurant";		//餐厅信息
+    public static final String SESSION_ORDER = "sessionOrder";			//订单信息
+    public static final String SESSION_CART = "sessionCart";			//购物车食品信息
+    public static final String SESSION_TOTALPRICE = "sessionTotalPrice";	//购物车总价
+    public static final String SESSION_TOTALCOUNT = "sessionTotalCount";	//购物车总数量
     public static final String SESSION_ROLE_RIGHTS = "sessionRoleRights";
     public static final String SESSION_menuList = "menuList";            //当前菜单
     public static final String SESSION_allmenuList = "allmenuList";        //全部菜单
+    
     public static final String SESSION_QX = "QX";
     public static final String SESSION_userpds = "userpds";
     public static final String SESSION_USERROL = "USERROL";                //用户对象

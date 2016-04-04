@@ -57,7 +57,7 @@
 							</c:forEach>
 						</c:when>
 						<c:otherwise>
-							<tr class="main_info">
+							<tr class="main_info hidden-l hidden-s">
 								<td colspan="100" class="text-center">没有相关数据</td>
 							</tr>
 						</c:otherwise>
@@ -112,7 +112,7 @@
 						</c:forEach>
 					</c:when>
 					<c:otherwise>
-						<div class="main_info text-center">
+						<div class="main_info text-center  hidden-b hidden-m">
 							没有相关数据
 						</div>
 					</c:otherwise>

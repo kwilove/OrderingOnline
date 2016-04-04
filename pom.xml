@@ -23,13 +23,15 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.8</java.version>
 
-		<jdbc.driver.groupId>mysql</jdbc.driver.groupId>
-		<jdbc.driver.artifactId>mysql-connector-java</jdbc.driver.artifactId>
-		<jdbc.driver.version>5.1.22</jdbc.driver.version>
 	</properties>
 
 	<dependencies>
-
+		<dependency>
+			<groupId>org.apache.maven.plugins</groupId>
+			<artifactId>maven-resources-plugin</artifactId>
+			<version>2.5</version>
+		</dependency>
+		
 		<!-- Testing -->
 		<dependency>
 			<groupId>junit</groupId>

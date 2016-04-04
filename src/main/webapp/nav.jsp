@@ -35,7 +35,7 @@
 			<div class="dialog-head">
 				<span class="close rotate-hover"></span><strong>购物车</strong>
 			</div>
-			<div class="dialog-body">哦欧！您的购物车是空的，请先选择您喜欢的美食！</div>
+			<div class="dialog-body">哦！您的购物车是空的，请先选择您喜欢的美食！</div>
 			<div class="dialog-foot">
 				<button class="button dialog-close">我再多买点</button>
 				<a href="order.jsp" class="button bg-green"> 我现在就想吃</a>
@@ -139,7 +139,7 @@
 					<li class="tips" data-title="我的订单"><a href="#"
 						class="toolbar-btn icon-file-text text-big"></a></li>
 					<li><span class="totalFoodCount  badge radius-circle"
-						style="position: relative; top: 30px; right: 10px;">0</span> <a
+						style="position: relative; top: 30px; right: 10px;">${sessionScope.sessionTotalCount }</span> <a
 						href="javascript:void;" id="shoppingCart-right"
 						class="toolbar-cartbtn icon-shopping-cart dialogs"
 						data-toggle="click" data-target="#shoppingCart-panel"

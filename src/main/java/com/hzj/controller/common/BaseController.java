@@ -36,7 +36,8 @@ public class BaseController {
 	 * 得到request对象
 	 */
 	public HttpServletRequest getRequest() {
-		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+				.getRequest();
 		return request;
 	}
 

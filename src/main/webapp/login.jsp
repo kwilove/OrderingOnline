@@ -77,9 +77,12 @@
                                 <img src="images/passcode.jpg" width="80" height="32" class="passcode"/>
                             </div>
                         </div>
+                        <button class="button button-block bg-green text-big margin-top">立即登陆</button>
                     </div>
                     <div class="panel-foot text-center">
-                        <button class="button button-block bg-green text-big">立即登陆</button>
+                    	<div class="text-right text-little">
+                            <a class="text-sub" href="register.jsp">账号注册</a>
+                        </div>
                     </div>
                 </div>
             </form>

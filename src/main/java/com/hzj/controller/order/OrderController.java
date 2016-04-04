@@ -50,15 +50,21 @@ public class OrderController extends BaseController {
 	 * 新增
 	 */
 	@RequestMapping(value = "/save")
-	public ModelAndView save() throws Exception {
+	public ModelAndView save(HttpServletRequest request) throws Exception {
 		logBefore(logger, "新增Order");
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
 		pd.put("order_id", this.get32UUID()); // 主键
 		orderService.save(pd);
+		
+		HttpSession session = request.getSession(false);
+		session.removeAttribute(Const.SESSION_CART);
+		session.setAttribute(Const.SESSION_TOTALPRICE, new Double(0));
+		session.setAttribute(Const.SESSION_TOTALCOUNT, new Integer(0));
+		
 		mv.addObject("msg", "success");
-		mv.setViewName("order_records");
+		mv.setViewName("redirect:list.do");
 		return mv;
 	}
 
@@ -122,15 +128,22 @@ public class OrderController extends BaseController {
 	public ModelAndView list(Page page, HttpServletRequest request) {
 		logBefore(logger, "列表Order");
 		ModelAndView mv = this.getModelAndView();
+		HttpSession session = request.getSession(false);
+		PageData current_user = (PageData) session.getAttribute(Const.SESSION_USER);
+		if (current_user == null) {
+			mv.setViewName("login");
+			return mv;
+		}
 		PageData pd = new PageData();
 		try {
 			pd = this.getPageData();
 			page.setPd(pd);
 			// List<PageData> varList = orderService.list(page); // 列出Order列表
-			HttpSession session = request.getSession(false);
-			PageData current_user = (PageData) session.getAttribute(Const.SESSION_USER);
 			pd.put("userId", current_user.getString("USER_ID"));
 			List<PageData> varList = orderService.listAllByUserId(pd);
+			for (PageData pageData : varList) {
+				System.err.println(pageData.toString());
+			}
 			mv.addObject("varList", varList);
 			mv.addObject("pd", pd);
 			mv.setViewName("order_records");
