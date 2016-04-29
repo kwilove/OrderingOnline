@@ -6,6 +6,8 @@
 		<setting name="cacheEnabled" value="true" /><!-- 全局映射器启用缓存 -->
 		<setting name="useGeneratedKeys" value="true" />
 		<setting name="defaultExecutorType" value="REUSE" />
+	<!-- 自定义选择日志实现 -->
+		<setting name="logImpl" value="LOG4J"/>
 		<setting name="logPrefix" value="dao." /><!--控制台打印sql语句 与logback.xml的 
 			<logger name="dao" level="DEBUG"/> logback联合使用 -->
 	</settings>

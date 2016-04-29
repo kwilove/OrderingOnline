@@ -46,10 +46,10 @@
 				INFO = #{INFO},
 				TELPHONE = #{TELPHONE},
 				TYPE = #{TYPE},
-				STATUS = #{STATUS},
-				WORKTIME = #{WORKTIME},
-				PICTURE = #{PICTURE},
-			RESTAURANT_ID = RESTAURANT_ID
+<!-- 				STATUS = #{STATUS}, -->
+<!-- 				PICTURE = #{PICTURE}, -->
+				WORKTIME = #{WORKTIME}
+<!-- 			RESTAURANT_ID = RESTAURANT_ID -->
 			where 
 				RESTAURANT_ID = #{RESTAURANT_ID}
 	</update>

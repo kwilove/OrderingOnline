@@ -12,8 +12,8 @@
 <head>
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>用户注册界面</title>
-<%@include file="common.jsp"%>
+<title>餐厅管理员注册界面</title>
+<%@include file="../common.jsp"%>
 <style type="text/css">
 .radio .sex-man.active {
 	color: white;
@@ -39,21 +39,22 @@
 				</div>
 				<br /> <br />
 
-				<form action="user/save.do" method="post" class="form-x">
+				<form action="restaurantadmin/save.do" method="post" class="form-x"
+					enctype="multipart/form-data">
 					<div class="panel">
 						<div class="panel-head">
-							<strong>用户注册</strong> <a
+							<strong>餐厅管理员注册</strong> <a
 								class="button bg-blue-light flash-hover float-right"
-								href="admin/register.jsp">前往餐厅管理员注册界面</a>
+								href="register.jsp">前往用户注册界面</a>
 						</div>
 						<div class="panel-body" style="padding: 30px;">
 							<div class="form-group">
 								<div class="label">
-									<label for="username"> 用户名</label>
+									<label for="adminname"> 用户名</label>
 								</div>
 								<div class="field">
-									<input type="text" class="input" id="username" name="username"
-										size="30" placeholder="手机/邮箱/账号" />
+									<input type="text" class="input" id="adminname"
+										name="ADMINNAME" size="30" placeholder="手机/邮箱/账号" />
 								</div>
 							</div>
 							<div class="form-group">
@@ -62,7 +63,7 @@
 								</div>
 								<div class="field">
 									<input type="password" class="input" id="password"
-										name="password" size="30" placeholder="请输入密码" />
+										name="PASSWORD" size="30" placeholder="请输入密码" />
 								</div>
 							</div>
 							<div class="form-group">
@@ -71,7 +72,7 @@
 								</div>
 								<div class="field">
 									<input type="password" class="input" id="password-confirm"
-										name="password-confirm" size="30" placeholder="请确认密码" />
+										name="PASSWORD-CONFIRM" size="30" placeholder="请确认密码" />
 								</div>
 							</div>
 							<div class="form-group">
@@ -79,7 +80,7 @@
 									<label for="realname"> 真实姓名</label>
 								</div>
 								<div class="field">
-									<input type="text" class="input" id="realname" name="realname"
+									<input type="text" class="input" id="realname" name="REALNAME"
 										size="30" placeholder="" />
 								</div>
 							</div>
@@ -90,12 +91,11 @@
 								<div class="field">
 									<div class="button-group radio">
 										<label class="button border-sub sex-man active"> <input
-											name="sex-radio" value="1" type="radio" checked="checked">男性
+											name="SEX" value="1" type="radio" checked="checked">男性
 										</label> <label class="button border-yellow sex-woman"> <input
-											name="sex-radio" value="0" type="radio">女性
+											name="SEX" value="0" type="radio">女性
 										</label>
 									</div>
-									<input type="hidden" class="input" name="sex" value="1" />
 								</div>
 							</div>
 							<div class="form-group">
@@ -103,17 +103,17 @@
 									<label for="phone"> 手机号</label>
 								</div>
 								<div class="field">
-									<input type="text" class="input" id="phone" name="phone"
+									<input type="text" class="input" id="phone" name="PHONE"
 										size="30" placeholder="" />
 								</div>
 							</div>
 							<div class="form-group">
 								<div class="label">
-									<label for="address"> 地址</label>
+									<label for="identitycard"> 身份证号</label>
 								</div>
 								<div class="field">
-									<input type="text" class="input" id="address" name="address"
-										size="30" placeholder="" />
+									<input type="text" class="input" id="identitycard"
+										name="IDENTITYCARD" size="30" placeholder="" />
 								</div>
 							</div>
 							<div class="form-group">
@@ -121,11 +121,9 @@
 									<label for="headphoto"> 头像上传</label>
 								</div>
 								<div class="field">
-									<!-- 									<input type="file" class="input" id="headphoto" name="headphoto" -->
-									<!-- 									 placeholder="" /> -->
 									<a class="button input-file" href="javascript:void(0);">+
 										浏览文件<input size="100" type="file" id="headphoto"
-										name="headphoto" />
+										name="HEADPHOTO" />
 									</a>
 								</div>
 							</div>
@@ -144,10 +142,9 @@
 		</div>
 	</div>
 	<script type="text/javascript">
-		$("input[type='radio']").on("click", function() {
-			// 			$(this).parents(".radio").find("input[type='radio']").attr("checked",false);
-			// 			$(this).attr("checked",true);
-			$("input[name='sex']").val($(this).val());
+		$("#headphoto").on("change", function() {
+			alert("change");
+			alert($(this).val());
 		})
 	</script>
 </body>

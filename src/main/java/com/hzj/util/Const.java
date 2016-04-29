@@ -8,6 +8,10 @@ import org.springframework.context.ApplicationContext;
  * @author:fh
  */
 public class Const {
+	
+	// 1、订单已提交	2、餐厅已确认	3、顾客已确认送达	4、顾客已评价
+	public static final int ORDER_STATUS = 1;
+	
 	public static final String FENGEFU = ",&,";            //统一分隔符
     public static final String SESSION_SECURITY_CODE = "sessionSecCode";
     public static final String SESSION_USER = "sessionUser";			//用户信息
@@ -16,6 +20,11 @@ public class Const {
     public static final String SESSION_CART = "sessionCart";			//购物车食品信息
     public static final String SESSION_TOTALPRICE = "sessionTotalPrice";	//购物车总价
     public static final String SESSION_TOTALCOUNT = "sessionTotalCount";	//购物车总数量
+    public static final String HEADPHOTOPATHFILE = "uploadFiles/headphoto/";        //文件上传路径
+    public static final String FILEPATHFILE = "uploadFiles/file/";        //文件上传路径
+    
+    
+    
     public static final String SESSION_ROLE_RIGHTS = "sessionRoleRights";
     public static final String SESSION_menuList = "menuList";            //当前菜单
     public static final String SESSION_allmenuList = "allmenuList";        //全部菜单
@@ -35,8 +44,6 @@ public class Const {
     public static final String FWATERM = "admin/config/FWATERM.txt";    //文字水印配置路径
     public static final String IWATERM = "admin/config/IWATERM.txt";    //图片水印配置路径
     public static final String WEIXIN = "admin/config/WEIXIN.txt";    //微信配置路径
-    public static final String FILEPATHIMG = "uploadFiles/uploadImgs/ziliao/";    //图片上传路径
-    public static final String FILEPATHFILE = "uploadFiles/file/";        //文件上传路径
     public static final String FILEPATHTWODIMENSIONCODE = "uploadFiles/twoDimensionCode/"; //二维码存放路径
     public static final String NO_INTERCEPTOR_PATH = ".*/((login)|(logout)|(code)|(app)|(weixin)|(static)|(main)|(websocket)).*";    //不对匹配该值的访问路径拦截（正则）
 

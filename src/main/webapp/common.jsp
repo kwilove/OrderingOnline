@@ -5,6 +5,8 @@
   Time: 13:33
   To change this template use File | Settings | File Templates.
 --%>
+<%@page import="com.hzj.util.Const"%>
+<%@page import="com.hzj.util.PageData"%>
 <meta charset="utf-8" />
 <title>网上订餐系统</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -21,8 +23,13 @@
 <script src="js/pintuer.js"></script>
 <script src="js/respond.js"></script>
 <script src="js/layer/layer.js"></script>
+<script src="js/layer/extend/layer.ext.js"></script>
 <script src="js/common.js"></script>
 <link type="image/x-icon" href="http://www.pintuer.com/favicon.ico"
 	rel="shortcut icon" />
 <link href="http://www.pintuer.com/favicon.ico" rel="bookmark icon" />
 <link rel="stylesheet" href="css/style.css">
+
+<%
+	PageData current_user = (PageData)session.getAttribute(Const.SESSION_USER);
+%>

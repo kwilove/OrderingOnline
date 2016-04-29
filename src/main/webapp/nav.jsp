@@ -7,7 +7,6 @@
 <%-- --%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@page import="com.hzj.util.Const"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%
@@ -91,7 +90,6 @@
 						</form>
 					</div>
 					<%
-						Object current_user = session.getAttribute(Const.SESSION_USER);
 						if (current_user == null) {
 					%>
 					<div class="hidden-s hidden-m xb2 xb1-move" id="no_user">
@@ -111,15 +109,20 @@
 						} else {
 					%>
 					<div class="hidden-s hidden-m xb2 xb1-move" id="user_login">
-						<a href="personal_center.jsp"><img
-							class="radius-circle float-right margin-large-right"
-							src="images/user/face.jpg" alt=""
-							style="width: 40px; height: 40px;"></a>
-						<%--<ul>--%>
-						<%--<li><a href="#">头部</a></li>--%>
-						<%--<li><a href="#">导航</a></li>--%>
-						<%--<li><a href="#">底部</a></li>--%>
-						<%--</ul>--%>
+						<c:if test="${sessionScope.type == 1 }">
+							<a href="personal_center.jsp"> <img
+								class="radius-circle float-right margin-large-right"
+								src="<%=current_user.getString("HEADPHOTO")%>" alt=""
+								style="width: 40px; height: 40px;">
+							</a>
+						</c:if>
+						<c:if test="${sessionScope.type == 2 }">
+							<a href="admin/admin_center.jsp"> <img
+								class="radius-circle float-right margin-large-right"
+								src="<%=current_user.getString("HEADPHOTO")%>" alt=""
+								style="width: 40px; height: 40px;">
+							</a>
+						</c:if>
 					</div>
 					<%
 						}
@@ -136,11 +139,11 @@
 				<button class="button icon-navicon" data-target="#nav-link"></button>
 				<ul class="nav nav-navicon text-center" id="nav-link"
 					style="height: 100%;">
-					<li class="tips" data-title="我的订单"><a href="#"
+					<li class="tips" data-title="我的订单"><a href="order/list.do"
 						class="toolbar-btn icon-file-text text-big"></a></li>
 					<li><span class="totalFoodCount  badge radius-circle"
-						style="position: relative; top: 30px; right: 10px;">${sessionScope.sessionTotalCount }</span> <a
-						href="javascript:void;" id="shoppingCart-right"
+						style="position: relative; top: 30px; right: 10px;">${sessionScope.sessionTotalCount }</span>
+						<a href="javascript:void;" id="shoppingCart-right"
 						class="toolbar-cartbtn icon-shopping-cart dialogs"
 						data-toggle="click" data-target="#shoppingCart-panel"
 						data-mask="1" data-width="50%">购物车</a></li>

@@ -22,15 +22,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hzj.controller.common.BaseController;
 import com.hzj.service.foodlist.FoodListService;
+import com.hzj.service.restaurant.RestaurantService;
 import com.hzj.util.AppUtil;
 import com.hzj.util.Const;
+import com.hzj.util.FileUpload;
 import com.hzj.util.Page;
 import com.hzj.util.PageData;
+import com.hzj.util.PathUtil;
 
 /**
  * 类名称：FoodListController 创建人：FH 创建时间：2016-03-15
@@ -42,20 +47,33 @@ public class FoodListController extends BaseController {
 	String menuUrl = "foodlist/list.do"; // 菜单地址(权限用)
 	@Resource(name = "foodlistService")
 	private FoodListService foodlistService;
+	@Resource(name = "restaurantService")
+	private RestaurantService restaurantService;
 
 	/**
 	 * 新增
 	 */
 	@RequestMapping(value = "/save")
-	public ModelAndView save() throws Exception {
+	public ModelAndView save(@RequestParam(value = "PICTURE", required = false) MultipartFile file, @RequestParam(value = "RESTAURANTID") String RESTAURANTID,
+			@RequestParam(value = "FOODNAME") String FOODNAME, @RequestParam(value = "FOODPRICE") String FOODPRICE, @RequestParam(value = "AMOUNT") String AMOUNT) throws Exception {
 		logBefore(logger, "新增FoodList");
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
-		pd = this.getPageData();
+		if (null != file && !file.isEmpty()) {
+			String filePath = PathUtil.getClassResources() + Const.HEADPHOTOPATHFILE; // 头像上传路径
+			String fileName = FileUpload.fileUp(file, filePath, this.get32UUID()); // 执行上传
+			pd.put("PICTURE", filePath + fileName);
+		} else {
+			pd.put("HEADPHOTO", "images/user/default_headphoto.jpg");
+		}
 		pd.put("FOODLIST_ID", this.get32UUID()); // 主键
+		pd.put("RESTAURANTID", RESTAURANTID);
+		pd.put("FOODNAME", FOODNAME);
+		pd.put("FOODPRICE", FOODPRICE);
+		pd.put("AMOUNT", AMOUNT);
 		foodlistService.save(pd);
 		mv.addObject("msg", "success");
-		mv.setViewName("save_result");
+		mv.setViewName("redirect:list");
 		return mv;
 	}
 
@@ -104,10 +122,11 @@ public class FoodListController extends BaseController {
 			pd = this.getPageData();
 			page.setPd(pd);
 			List<PageData> varList = foodlistService.list(page); // 列出FoodList列表
-			mv.setViewName("shop");
+			pd.put("RESTAURANT_ID", pd.getString("RESTAURANTID"));
+			pd = restaurantService.findById(pd); // 列出Restaurant列表
+			mv.setViewName("/restaurant/foodList");
 			mv.addObject("varList", varList);
 			mv.addObject("pd", pd);
-			mv.addObject(Const.SESSION_QX, this.getHC()); // 按钮权限
 		} catch (Exception e) {
 			logger.error(e.toString(), e);
 		}

@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -45,7 +47,7 @@ public class UserController extends BaseController {
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
 		pd = this.getPageData();
-//		pd.put("user_id", this.get32UUID()); // 主键
+		// pd.put("user_id", this.get32UUID()); // 主键
 		pd.put("user_id", pd.getString("username")); // 主键
 		userService.save(pd);
 		mv.addObject("msg", "success");
@@ -75,15 +77,25 @@ public class UserController extends BaseController {
 	 * 修改
 	 */
 	@RequestMapping(value = "/edit")
-	public ModelAndView edit() throws Exception {
+	@ResponseBody
+	public Map<String, Object> edit(HttpServletRequest request) throws Exception {
 		logBefore(logger, "修改User");
-		ModelAndView mv = this.getModelAndView();
+		Map<String, Object> map = new HashMap<>();
 		PageData pd = new PageData();
-		pd = this.getPageData();
-		userService.edit(pd);
-		mv.addObject("msg", "success");
-		mv.setViewName("save_result");
-		return mv;
+		try {
+			pd = this.getPageData();
+			userService.edit(pd);
+			PageData currentUser = null;
+			if ((currentUser = userService.findById(pd)) != null) {
+				HttpSession session = request.getSession(false);
+				session.setAttribute(Const.SESSION_USER, currentUser);
+				map.put("user", currentUser);
+			}
+			map.put("msg", "success");
+		} catch (Exception e) {
+			map.put("msg", "fail");
+		}
+		return map;
 	}
 
 	/**

@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.session.Session;
@@ -19,15 +21,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.hzj.controller.common.BaseController;
 import com.hzj.service.restaurantadmin.RestaurantAdminService;
 import com.hzj.util.AppUtil;
 import com.hzj.util.Const;
+import com.hzj.util.FileUpload;
 import com.hzj.util.Page;
 import com.hzj.util.PageData;
+import com.hzj.util.PathUtil;
+import com.hzj.util.Tools;
 
 /**
  * 类名称：RestaurantAdminController 创建人：FH 创建时间：2016-03-15
@@ -44,15 +51,32 @@ public class RestaurantAdminController extends BaseController {
 	 * 新增
 	 */
 	@RequestMapping(value = "/save")
-	public ModelAndView save() throws Exception {
-		logBefore(logger, "新增RestaurantAdmin");
+	public ModelAndView save(@RequestParam(value = "HEADPHOTO", required = false) MultipartFile file,
+			@RequestParam(value = "ADMINNAME") String ADMINNAME, @RequestParam(value = "PASSWORD") String PASSWORD,
+			@RequestParam(value = "REALNAME") String REALNAME, @RequestParam(value = "SEX") String SEX,
+			@RequestParam(value = "PHONE") String PHONE, @RequestParam(value = "IDENTITYCARD") String IDENTITYCARD)
+					throws Exception {
+		logBefore(logger, "新增餐厅管理员");
 		ModelAndView mv = this.getModelAndView();
 		PageData pd = new PageData();
-		pd = this.getPageData();
+		if (null != file && !file.isEmpty()) {
+			String filePath = PathUtil.getClassResources() + Const.HEADPHOTOPATHFILE; // 头像上传路径
+			String fileName = FileUpload.fileUp(file, filePath, this.get32UUID()); // 执行上传
+			pd.put("HEADPHOTO", filePath + fileName);
+		} else {
+			pd.put("HEADPHOTO", "images/user/default_headphoto.jpg");
+		}
 		pd.put("RESTAURANTADMIN_ID", this.get32UUID()); // 主键
+		pd.put("RESTAURANT_ID", this.get32UUID()); // 主键
+		pd.put("ADMINNAME", ADMINNAME);
+		pd.put("PASSWORD", PASSWORD);
+		pd.put("REALNAME", REALNAME);
+		pd.put("SEX", SEX);
+		pd.put("PHONE", PHONE);
+		pd.put("IDENTITYCARD", IDENTITYCARD);
 		restaurantadminService.save(pd);
 		mv.addObject("msg", "success");
-		mv.setViewName("save_result");
+		mv.setViewName("login");
 		return mv;
 	}
 
@@ -78,15 +102,25 @@ public class RestaurantAdminController extends BaseController {
 	 * 修改
 	 */
 	@RequestMapping(value = "/edit")
-	public ModelAndView edit() throws Exception {
+	@ResponseBody
+	public Map<String, Object> edit(HttpServletRequest request) throws Exception {
 		logBefore(logger, "修改RestaurantAdmin");
-		ModelAndView mv = this.getModelAndView();
+		Map<String, Object> map = new HashMap<>();
 		PageData pd = new PageData();
-		pd = this.getPageData();
-		restaurantadminService.edit(pd);
-		mv.addObject("msg", "success");
-		mv.setViewName("save_result");
-		return mv;
+		try {
+			pd = this.getPageData();
+			restaurantadminService.edit(pd);
+			PageData currentUser = null;
+			if ((currentUser = restaurantadminService.findById(pd)) != null) {
+				HttpSession session = request.getSession(false);
+				session.setAttribute(Const.SESSION_USER, currentUser);
+				map.put("admin", currentUser);
+			}
+			map.put("msg", "success");
+		} catch (Exception e) {
+			map.put("msg", "fail");
+		}
+		return map;
 	}
 
 	/**

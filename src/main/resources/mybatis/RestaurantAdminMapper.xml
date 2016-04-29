@@ -1,113 +1,123 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="RestaurantAdminMapper">
-	
-	
-	<!-- 新增-->
+
+
+	<!-- 新增 -->
 	<insert id="save" parameterType="pd">
 		insert into TB_RESTAURANTADMIN(
-			ADMINNAME,	
-			PASSWORD,	
-			REALNAME,	
-			SEX,	
-			PHONE,	
-			IDENTITYCARD,	
-			HEADPHOTO,	
-			RESTAURANTADMIN_ID
+		RESTAURANT_ID,
+		ADMINNAME,
+		PASSWORD,
+		REALNAME,
+		SEX,
+		PHONE,
+		IDENTITYCARD,
+		HEADPHOTO,
+		RESTAURANTADMIN_ID
 		) values (
-			#{ADMINNAME},	
-			#{PASSWORD},	
-			#{REALNAME},	
-			#{SEX},	
-			#{PHONE},	
-			#{IDENTITYCARD},	
-			#{HEADPHOTO},	
-			#{RESTAURANTADMIN_ID}
+		#{RESTAURANT_ID},
+		#{ADMINNAME},
+		#{PASSWORD},
+		#{REALNAME},
+		#{SEX},
+		#{PHONE},
+		#{IDENTITYCARD},
+		#{HEADPHOTO},
+		#{RESTAURANTADMIN_ID}
 		)
 	</insert>
-	
-	
-	<!-- 删除-->
+
+
+	<!-- 删除 -->
 	<delete id="delete" parameterType="pd">
 		delete from TB_RESTAURANTADMIN
-		where 
-			RESTAURANTADMIN_ID = #{RESTAURANTADMIN_ID}
+		where
+		RESTAURANTADMIN_ID = #{RESTAURANTADMIN_ID}
 	</delete>
-	
-	
+
+
 	<!-- 修改 -->
 	<update id="edit" parameterType="pd">
-		update  TB_RESTAURANTADMIN
-			set 
-				ADMINNAME = #{ADMINNAME},
-				PASSWORD = #{PASSWORD},
-				REALNAME = #{REALNAME},
-				SEX = #{SEX},
-				PHONE = #{PHONE},
-				IDENTITYCARD = #{IDENTITYCARD},
-				HEADPHOTO = #{HEADPHOTO},
-			RESTAURANTADMIN_ID = RESTAURANTADMIN_ID
-			where 
-				RESTAURANTADMIN_ID = #{RESTAURANTADMIN_ID}
+		update TB_RESTAURANTADMIN
+		<set>
+			PASSWORD = #{PASSWORD},
+			REALNAME = #{REALNAME},
+			SEX = #{SEX},
+			PHONE = #{PHONE},
+			IDENTITYCARD = #{IDENTITYCARD}
+		</set>
+		where
+		RESTAURANTADMIN_ID = #{RESTAURANTADMIN_ID}
 	</update>
-	
-	
+
+
 	<!-- 通过ID获取数据 -->
 	<select id="findById" parameterType="pd" resultType="pd">
-		select 
-			ADMINNAME,	
-			PASSWORD,	
-			REALNAME,	
-			SEX,	
-			PHONE,	
-			IDENTITYCARD,	
-			HEADPHOTO,	
-			RESTAURANTADMIN_ID
-		from 
-			TB_RESTAURANTADMIN
-		where 
-			RESTAURANTADMIN_ID = #{RESTAURANTADMIN_ID}
+		select
+		RESTAURANT_ID,
+		ADMINNAME,
+		PASSWORD,
+		REALNAME,
+		SEX,
+		PHONE,
+		IDENTITYCARD,
+		HEADPHOTO,
+		RESTAURANTADMIN_ID
+		from
+		TB_RESTAURANTADMIN
+		where
+		1 = 1
+		<if test="RESTAURANTADMIN_ID != null and RESTAURANTADMIN_ID != ''">
+			and RESTAURANTADMIN_ID = #{RESTAURANTADMIN_ID}
+		</if>
+		<if test="ADMINNAME != null and ADMINNAME != ''">
+			and ADMINNAME = #{ADMINNAME}
+		</if>
 	</select>
-	
-	
+
+
 	<!-- 列表 -->
 	<select id="datalistPage" parameterType="page" resultType="pd">
 		select
-				a.ADMINNAME,	
-				a.PASSWORD,	
-				a.REALNAME,	
-				a.SEX,	
-				a.PHONE,	
-				a.IDENTITYCARD,	
-				a.HEADPHOTO,	
-				a.RESTAURANTADMIN_ID
-		from 
-				TB_RESTAURANTADMIN a
+		a.RESTAURANT_ID,
+		a.ADMINNAME,
+		a.PASSWORD,
+		a.REALNAME,
+		a.SEX,
+		a.PHONE,
+		a.IDENTITYCARD,
+		a.HEADPHOTO,
+		a.RESTAURANTADMIN_ID
+		from
+		TB_RESTAURANTADMIN a
 	</select>
-	
+
 	<!-- 列表(全部) -->
 	<select id="listAll" parameterType="pd" resultType="pd">
 		select
-				a.ADMINNAME,	
-				a.PASSWORD,	
-				a.REALNAME,	
-				a.SEX,	
-				a.PHONE,	
-				a.IDENTITYCARD,	
-				a.HEADPHOTO,	
-				a.RESTAURANTADMIN_ID
-		from 
-				TB_RESTAURANTADMIN a
+		a.RESTAURANT_ID,
+		a.ADMINNAME,
+		a.PASSWORD,
+		a.REALNAME,
+		a.SEX,
+		a.PHONE,
+		a.IDENTITYCARD,
+		a.HEADPHOTO,
+		a.RESTAURANTADMIN_ID
+		from
+		TB_RESTAURANTADMIN a
 	</select>
-	
+
 	<!-- 批量删除 -->
 	<delete id="deleteAll" parameterType="String">
 		delete from TB_RESTAURANTADMIN
-		where 
-			RESTAURANTADMIN_ID in
-		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
-                 #{item}
+		where
+		RESTAURANTADMIN_ID in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
 		</foreach>
 	</delete>
-	
+
 </mapper>

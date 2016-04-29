@@ -34,6 +34,7 @@ import com.hzj.util.AppUtil;
 import com.hzj.util.Const;
 import com.hzj.util.Page;
 import com.hzj.util.PageData;
+import com.hzj.util.Tools;
 
 /**
  * 类名称：OrderController 创建人：FH 创建时间：2016-03-15
@@ -57,12 +58,12 @@ public class OrderController extends BaseController {
 		pd = this.getPageData();
 		pd.put("order_id", this.get32UUID()); // 主键
 		orderService.save(pd);
-		
+
 		HttpSession session = request.getSession(false);
 		session.removeAttribute(Const.SESSION_CART);
 		session.setAttribute(Const.SESSION_TOTALPRICE, new Double(0));
 		session.setAttribute(Const.SESSION_TOTALCOUNT, new Integer(0));
-		
+
 		mv.addObject("msg", "success");
 		mv.setViewName("redirect:list.do");
 		return mv;
@@ -139,7 +140,11 @@ public class OrderController extends BaseController {
 			pd = this.getPageData();
 			page.setPd(pd);
 			// List<PageData> varList = orderService.list(page); // 列出Order列表
-			pd.put("userId", current_user.getString("USER_ID"));
+			if (!Tools.isEmpty(current_user.getString("USER_ID"))) {
+				pd.put("USERID", current_user.getString("USER_ID"));
+			} else if (!Tools.isEmpty(current_user.getString("RESTAURANT_ID"))) {
+				pd.put("RESTAURANTID", current_user.getString("RESTAURANT_ID"));
+			}
 			List<PageData> varList = orderService.listAllByUserId(pd);
 			for (PageData pageData : varList) {
 				System.err.println(pageData.toString());

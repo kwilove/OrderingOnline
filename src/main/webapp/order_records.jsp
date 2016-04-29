@@ -48,10 +48,24 @@
 										<button
 											class="border-delete button button-small border-yellow"
 											data-order-id="${var.ORDER_ID }">删除</button>
-										<button class="arrived button button-small border-green"
-											data-order-id="${var.ORDER_ID }">确认送达</button>
-										<button class="evaluation button button-small border-blue"
-											data-order-id="${var.ORDER_ID }" style="display: none;">评价</button>
+										<c:choose>
+											<c:when test="${sessionScope.type == 1 }">
+												<c:if test="${var.STATUS == 2 }">
+													<button class="arrived button button-small border-green"
+														data-order-id="${var.ORDER_ID }">确认送达</button>
+												</c:if>
+												<c:if test="${var.STATUS == 3 }">
+													<button class="evaluation button button-small border-blue"
+														data-order-id="${var.ORDER_ID }">评价</button>
+												</c:if>
+											</c:when>
+											<c:when test="${sessionScope.type == 2 }">
+												<c:if test="${var.STATUS == 1 }">
+													<button class="accept button button-small border-green"
+														data-order-id="${var.ORDER_ID }">接受订单</button>
+												</c:if>
+											</c:when>
+										</c:choose>
 									</td>
 								</tr>
 							</c:forEach>
@@ -69,7 +83,7 @@
 					<c:when test="${not empty varList}">
 						<c:forEach items="${varList}" var="var" varStatus="vs">
 							<blockquote
-								class="order-box border-gray line margin-top  hidden-b hidden-m"
+								class="order-box border-gray line margin-top hidden-b hidden-m"
 								style="padding-bottom: 0;">
 								<p class="padding-left">
 									餐厅已确认<small class="margin-left">2016-03-21</small> <a
@@ -82,7 +96,7 @@
 									<img src="images/bishengke.jpg" width="80px" height="80px"
 										class="radius-circle" />
 								</div>
-								<div class="xl9 xl1-move">
+								<div class="xl9 xl1-move margin-bottom">
 									<strong class="xl5 margin-big-left float-left">${var.RESTAURANTNAME }</strong> <small
 										class="order-detail xl11" style="color: #999">
 										<div>
@@ -101,13 +115,17 @@
 										<span class="text-big">￥${var.TOTALPRICE }</<span>
 									</small>
 								</div>
-								<button
-									class="arrived button button-little bg-green float-right margin-small"
-									data-order-id="${var.ORDER_ID }">确认送达</button>
-								<button
-									class="evaluation button button-little text-yellow float-right margin-small"
-									data-order-id="${var.ORDER_ID }"
-									style="border-color: #f60; display: none;">评价</button>
+								<c:if test="${var.STATUS == 1 }">
+									<button
+										class="arrived button button-little bg-green float-right margin-small"
+										data-order-id="${var.ORDER_ID }">确认送达</button>
+								</c:if>
+								<c:if test="${var.STATUS == 3 }">
+									<button
+										class="evaluation button button-little text-yellow float-right margin-small"
+										data-order-id="${var.ORDER_ID }"
+										style="border-color: #f60;">评价</button>
+								</c:if>
 							</blockquote>
 						</c:forEach>
 					</c:when>
@@ -132,9 +150,32 @@
 				$(this).parent().html("<small>" + foodStr + "</small>");
 			})
 
+			$(".accept").on("click", function() {
+				var target = $(this);
+				$.ajax({
+					url : "order/updateStatus.do",
+					type : "post",
+					data : {
+						"STATUS" : "2",
+						"ORDER_ID" : $(target).data("order-id")
+					},
+					success : function(data) {
+						layer.msg("订单已接受！", {
+							icon : 6
+						});
+						$(target).hide();
+					},
+					error : function(data) {
+						layer.msg("订单接受失败！", {
+							icon : 7
+						});
+					}
+				});
+			});
+			
 			$(".arrived").on("click", function() {
 				var target = $(this);
-				layer.confirm('确认删除？', {
+				layer.confirm('确认送达？', {
 					time : 10000, //20s后自动关闭
 					btn : [ '确认', '取消' ]
 				}, function() {
@@ -143,13 +184,13 @@
 						type : "post",
 						data : {
 							"STATUS" : "3",
-							"ORDER_ID" : $(this).data("order-id")
+							"ORDER_ID" : $(target).data("order-id")
 						},
 						success : function(data) {
 							layer.msg("你已确认送达！", {
 								icon : 6
 							});
-							$(target).hide().siblings(".evaluation").show();
+							$(target).hide();
 						},
 						error : function(data) {
 							layer.msg("订单确认操作失败！", {
@@ -188,12 +229,33 @@
 			});
 
 			$(".evaluation").on("click", function() {
+				var target = $(this);
 				layer.prompt({
 					title : '评价',
-					formType : 1
+					formType : 2
 				//prompt风格，支持0-2
-				}, function(pass) {
-					layer.msg("评价完成！");
+				}, function(evaluation) {
+					$.ajax({
+						url : "order/updateStatus.do",
+						type : "post",
+						data : {
+							"STATUS" : "4",
+							"EVALUATION" : evaluation,
+							"ORDER_ID" : $(target).data("order-id")
+						},
+						success : function(data) {
+							layer.msg("评价完成！", {
+								icon : 6
+							});
+							$(target).hide();
+// 							$(target).hide().siblings(".evaluation").show();
+						},
+						error : function(data) {
+							layer.msg("评价失败！", {
+								icon : 7
+							});
+						}
+					})
 				})
 			});
 		})

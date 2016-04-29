@@ -1,173 +1,184 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="OrderMapper">
-	
-	
-	<!-- 新增-->
+
+
+	<!-- 新增 -->
 	<insert id="save" parameterType="pd">
 		insert into TB_ORDER(
-			RESTAURANTID,	
-			USERID,	
-			CREATETIME,	
-			FOOD,
-			TOTALPRICE,	
-			CONTACT,	
-			PHONE,	
-			ADDRESS,	
-			ARRIVETIME,	
-			EVALUATION,	
-			STATUS,	
-			ORDER_ID
+		RESTAURANTID,
+		USERID,
+		CREATETIME,
+		FOOD,
+		TOTALPRICE,
+		CONTACT,
+		PHONE,
+		ADDRESS,
+		ARRIVETIME,
+		EVALUATION,
+		STATUS,
+		ORDER_ID
 		) values (
-			#{restaurantid},	
-			#{userid},	
-			#{createtime},
-			#{food},
-			#{totalprice},
-			#{contact},	
-			#{phone},	
-			#{address},	
-			#{arrivetime},	
-			#{evaluation},	
-			#{status},	
-			#{order_id}
+		#{restaurantid},
+		#{userid},
+		#{createtime},
+		#{food},
+		#{totalprice},
+		#{contact},
+		#{phone},
+		#{address},
+		#{arrivetime},
+		#{evaluation},
+		#{status},
+		#{order_id}
 		)
 	</insert>
-	
-	
-	<!-- 删除-->
+
+
+	<!-- 删除 -->
 	<delete id="delete" parameterType="pd">
 		delete from TB_ORDER
-		where 
-			ORDER_ID = #{ORDER_ID}
+		where
+		ORDER_ID = #{ORDER_ID}
 	</delete>
-	
-	
+
+
 	<!-- 修改 -->
 	<update id="edit" parameterType="pd">
-		update  TB_ORDER
-			set 
-				RESTAURANTID = #{RESTAURANTID},
-				USERID = #{USERID},
-				CREATETIME = #{CREATETIME},
-				FOOD = #{FOOD},
-				TOTALPRICE = #{TOTALPRICE},
-				CONTACT = #{CONTACT},
-				PHONE = #{PHONE},
-				ADDRESS = #{ADDRESS},
-				ARRIVETIME = #{ARRIVETIME},
-				EVALUATION = #{EVALUATION},
-				STATUS = #{STATUS},
-			ORDER_ID = ORDER_ID
-			where 
-				ORDER_ID = #{ORDER_ID}
+		update TB_ORDER
+		set
+		RESTAURANTID = #{RESTAURANTID},
+		USERID = #{USERID},
+		CREATETIME = #{CREATETIME},
+		FOOD = #{FOOD},
+		TOTALPRICE = #{TOTALPRICE},
+		CONTACT = #{CONTACT},
+		PHONE = #{PHONE},
+		ADDRESS = #{ADDRESS},
+		ARRIVETIME = #{ARRIVETIME},
+		EVALUATION = #{EVALUATION},
+		STATUS = #{STATUS},
+		ORDER_ID = ORDER_ID
+		where
+		ORDER_ID = #{ORDER_ID}
 	</update>
-	
+
 	<!-- 修改订单状态 -->
 	<update id="updateStatus" parameterType="pd">
-		update  TB_ORDER
-			set 
-				STATUS = #{STATUS}
-			where 
-				ORDER_ID = #{ORDER_ID}
+		update TB_ORDER
+		<set>
+			STATUS = #{STATUS},
+			<if test="EVALUATION != null and EVALUATION != ''">
+				EVALUATION = #{EVALUATION}
+			</if>
+		</set>
+		where
+		ORDER_ID = #{ORDER_ID}
 	</update>
-	
+
 	<!-- 通过ID获取数据 -->
 	<select id="findById" parameterType="pd" resultType="pd">
-		select 
-			RESTAURANTID,	
-			USERID,	
-			CREATETIME,	
-			FOOD,	
-			TOTALPRICE,	
-			CONTACT,	
-			PHONE,	
-			ADDRESS,	
-			ARRIVETIME,	
-			EVALUATION,	
-			STATUS,	
-			ORDER_ID
-		from 
-			TB_ORDER
-		where 
-			ORDER_ID = #{ORDER_ID}
+		select
+		RESTAURANTID,
+		USERID,
+		CREATETIME,
+		FOOD,
+		TOTALPRICE,
+		CONTACT,
+		PHONE,
+		ADDRESS,
+		ARRIVETIME,
+		EVALUATION,
+		STATUS,
+		ORDER_ID
+		from
+		TB_ORDER
+		where
+		ORDER_ID = #{ORDER_ID}
 	</select>
-	
-	<!-- 通过当前用户ID获取数据 -->
+
+	<!-- 通过当前用户ID或餐厅ID获取数据 -->
 	<select id="findByUserId" parameterType="pd" resultType="pd">
-		select 
-			a.RESTAURANTID,	
-			a.USERID,	
-			a.CREATETIME,
-			a.FOOD,		
-			a.TOTALPRICE,	
-			a.CONTACT,	
-			a.PHONE,	
-			a.ADDRESS,	
-			a.ARRIVETIME,	
-			a.EVALUATION,	
-			a.STATUS,	
-			a.ORDER_ID,
-			r.RESTAURANTNAME
-		from 
-			TB_ORDER a 
-		inner join 
-			TB_RESTAURANT r
-		on 
-			a.RESTAURANTID = r.RESTAURANT_ID
-		and
-			a.USERID = #{userId }
+		select
+		a.RESTAURANTID,
+		a.USERID,
+		a.CREATETIME,
+		a.FOOD,
+		a.TOTALPRICE,
+		a.CONTACT,
+		a.PHONE,
+		a.ADDRESS,
+		a.ARRIVETIME,
+		a.EVALUATION,
+		a.STATUS,
+		a.ORDER_ID,
+		r.RESTAURANTNAME
+		from
+		TB_ORDER a
+		inner join
+		TB_RESTAURANT r
+		on
+		a.RESTAURANTID = r.RESTAURANT_ID
+		<choose>
+			<when test="USERID != null and USERID != ''">
+				and a.USERID = #{USERID }
+			</when>
+			<when test="RESTAURANTID != null and RESTAURANTID != ''">
+				and a.RESTAURANTID = #{RESTAURANTID }
+			</when>
+		</choose>
 	</select>
-	
+
 	<!-- 列表 -->
 	<select id="datalistPage" parameterType="page" resultType="pd">
 		select
-				a.RESTAURANTID,	
-				a.USERID,	
-				a.CREATETIME,	
-				a.FOOD,		
-				a.TOTALPRICE,	
-				a.CONTACT,	
-				a.PHONE,	
-				a.ADDRESS,	
-				a.ARRIVETIME,	
-				a.EVALUATION,	
-				a.STATUS,	
-				a.ORDER_ID
-		from 
-				TB_ORDER a
+		a.RESTAURANTID,
+		a.USERID,
+		a.CREATETIME,
+		a.FOOD,
+		a.TOTALPRICE,
+		a.CONTACT,
+		a.PHONE,
+		a.ADDRESS,
+		a.ARRIVETIME,
+		a.EVALUATION,
+		a.STATUS,
+		a.ORDER_ID
+		from
+		TB_ORDER a
 	</select>
-	
+
 	<!-- 列表(全部) -->
 	<select id="listAll" parameterType="pd" resultType="pd">
 		select
-				a.RESTAURANTID,	
-				a.USERID,	
-				a.CREATETIME,	
-				a.FOOD,		
-				a.TOTALPRICE,	
-				a.CONTACT,	
-				a.PHONE,	
-				a.ADDRESS,	
-				a.ARRIVETIME,	
-				a.EVALUATION,	
-				a.STATUS,	
-				a.ORDER_ID,
-				r.RESTAURANTNAME,
-		from 
-				TB_ORDER a
+		a.RESTAURANTID,
+		a.USERID,
+		a.CREATETIME,
+		a.FOOD,
+		a.TOTALPRICE,
+		a.CONTACT,
+		a.PHONE,
+		a.ADDRESS,
+		a.ARRIVETIME,
+		a.EVALUATION,
+		a.STATUS,
+		a.ORDER_ID,
+		r.RESTAURANTNAME,
+		from
+		TB_ORDER a
 		where
-				a.USERID = #{userId }
+		a.USERID = #{userId }
 	</select>
-	
+
 	<!-- 批量删除 -->
 	<delete id="deleteAll" parameterType="String">
 		delete from TB_ORDER
-		where 
-			ORDER_ID in
-		<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
-                 #{item}
+		where
+		ORDER_ID in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
 		</foreach>
 	</delete>
-	
+
 </mapper>

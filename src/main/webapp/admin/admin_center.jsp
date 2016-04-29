@@ -13,7 +13,7 @@
 <base href="<%=basePath%>">
 <meta charset="utf-8" />
 <title>个人中心</title>
-<%@include file="common.jsp"%>
+<%@include file="../common.jsp"%>
 <style>
 .admin {
 	padding: 30px;
@@ -34,7 +34,7 @@
 </style>
 </head>
 <body>
-	<jsp:include page="nav.jsp"></jsp:include>
+	<jsp:include page="../nav.jsp"></jsp:include>
 	<%--     <%@include file="nav.jsp" %> --%>
 	<div class="container">
 		<div class="admin">
@@ -44,7 +44,7 @@
 						<div class="panel-body text-center">
 							<img src="<%=current_user.getString("HEADPHOTO")%>" width="120"
 								class="radius-circle"> <br>
-							<%=current_user.getString("USERNAME")%>
+							<%=current_user.getString("ADMINNAME")%>
 						</div>
 						<div class="panel-foot bg-back border-back">
 							您好，<span class="realname"><%=current_user.getString("REALNAME")%></span>
@@ -61,23 +61,23 @@
 						</div>
 					</div>
 					<br>
-					<!-- 					<div class="panel"> -->
-					<!-- 						<div class="panel-head"> -->
-					<!-- 							<strong>站点统计</strong> -->
-					<!-- 						</div> -->
-					<!-- 						<ul class="list-group"> -->
-					<!-- 							<li><span class="float-right badge bg-red">88</span><span -->
-					<!-- 								class="icon-user"></span> 会员</li> -->
-					<!-- 							<li><span class="float-right badge bg-main">828</span><span -->
-					<!-- 								class="icon-file"></span> 文件</li> -->
-					<!-- 							<li><span class="float-right badge bg-main">828</span><span -->
-					<!-- 								class="icon-shopping-cart"></span> 订单</li> -->
-					<!-- 							<li><span class="float-right badge bg-main">828</span><span -->
-					<!-- 								class="icon-file-text"></span> 内容</li> -->
-					<!-- 							<li><span class="float-right badge bg-main">828</span><span -->
-					<!-- 								class="icon-database"></span> 数据库</li> -->
-					<!-- 						</ul> -->
-					<!-- 					</div> -->
+					<div class="panel">
+						<div class="panel-head">
+							<strong>信息管理</strong>
+						</div>
+						<ul class="list-group">
+							<li class="bg-back"><a href="admin/admin_center.jsp"><span class="float-right badge bg-main">1</span><span
+								class="icon-user"></span> 个人信息管理</a></li>
+							<li><a href="restaurant/enter.do?RESTAURANT_ID=<%=current_user.getString("RESTAURANT_ID")%>"><span class="float-right badge">828</span><span
+								class="icon-file-text"></span> 餐厅信息管理</a></li>
+<!-- 							<li><a href="order/list.do"><span class="float-right badge bg-yellow">3</span><span -->
+<!-- 								class="icon-shopping-cart"></span> 订单</a></li> -->
+<!-- 							<li><span class="float-right badge ">828</span><span -->
+<!-- 								class="icon-file"></span> 文件</li> -->
+<!-- 							<li><span class="float-right badge bg-main">828</span><span -->
+<!-- 								class="icon-database"></span> 数据库</li> -->
+						</ul>
+					</div>
 					<br>
 				</div>
 				<div class="xm9">
@@ -130,8 +130,8 @@
 								style="display: none;">保存</button>
 						</div>
 						<form id="infoForm" class="form-x">
-							<input type="hidden" name="USER_ID"
-								value="<%=current_user.getString("USER_ID")%>">
+							<input type="hidden" name="RESTAURANTADMIN_ID"
+								value="<%=current_user.getString("RESTAURANTADMIN_ID")%>">
 							<!-- 							<input -->
 							<!-- 								type="text" class="input" name="SEX" -->
 							<%-- 								value="<%=(Integer)current_user.get("SEX")%>" /> --%>
@@ -196,11 +196,12 @@
 									</div>
 									<div class="form-group">
 										<div class="label">
-											<label for="address">地址</label>
+											<label for="address">身份证号</label>
 										</div>
 										<div class="field">
-											<input type="text" class="input" id="address" name="ADDRESS"
-												value="<%=current_user.getString("ADDRESS")%>">
+											<input type="text" class="input" id="identitycard"
+												name="IDENTITYCARD"
+												value="<%=current_user.getString("IDENTITYCARD")%>">
 										</div>
 									</div>
 								</div>
@@ -209,7 +210,7 @@
 									<tbody>
 										<tr>
 											<td width="110" align="right">用户名:</td>
-											<td class="username"><%=current_user.getString("USERNAME")%></td>
+											<td class="username"><%=current_user.getString("ADMINNAME")%></td>
 											<td width="90" align="right">密码:</td>
 											<td class="password"><%=current_user.getString("PASSWORD")%></td>
 										</tr>
@@ -229,9 +230,13 @@
 										</tr>
 										<tr>
 											<td align="right">手机号码:</td>
-											<td class="phone"><%=current_user.getString("PHONE")%></td>
-											<td align="right">地址:</td>
-											<td class="address"><%=current_user.getString("ADDRESS")%></td>
+											<td class="phone" colspan="3"><%=current_user.getString("PHONE")%></td>
+										</tr>
+										<tr>
+											<td align="right">身份证号:</td>
+											<td class="identitycard" colspan="3"><%=current_user.getString("IDENTITYCARD")%></td>
+											<!-- 											<td align="right">地址:</td> -->
+											<%-- 											<td class="address"><%=current_user.getString("ADDRESS")%></td> --%>
 										</tr>
 									</tbody>
 								</table>
@@ -245,63 +250,6 @@
 
 	<div class="layout">
 		<div class="line">
-			<div class="mobile  xl12 xs12 hidden-b hidden-m"
-				style="padding-bottom: 50px;">
-				<%--<div class="head-fix fixed bg-green bg-inverse x12" data-style="fixed-top" data-offset-fixed="0" style="z-index: 1">--%>
-				<div class="head-fix bg-green bg-inverse x12">
-					<span>我的</span> <a class="btn-config icon icon-cog float-right"></a>
-					<a class="icon icon-bell float-right"></a>
-				</div>
-				<a class="personal_info bg-green bg-inverse xl12"
-					href="personal/personal_info.jsp"> <span class="xl3"> <img
-						class="personal-photo  radius-circle" src="images/user/face.jpg"
-						alt="">
-				</span> <span class="xl5 padding">
-						<p class="text-big">19211470762</p>
-						<p>
-							<span
-								class="icon icon-mobile-phone text-large margin-small-right"></span>19211470762
-						</p>
-				</span> <span class="icon icon-chevron-right text-large float-right"></span>
-				</a>
-
-				<div class="bg-white xl12 hidden-s hidden-m"
-					style="height: 70px; line-height: 70px;">
-					<div class="xl4 text-center"
-						style="height: 100%; padding-top: 10px;">
-						<p class="text-red" style="margin: 0;">
-							<span class="text-large margin-right">0.0</span>元
-						</p>
-
-						<p style="margin: 0;">我的余额</p>
-					</div>
-					<div class="xl4 text-center"
-						style="height: 100%; padding-top: 10px;">
-						<p class="text-red" style="margin: 0;">
-							<span class="text-large margin-right">0</span>个
-						</p>
-
-						<p style="margin: 0;">我的红包</p>
-					</div>
-					<div class="xl4 text-center"
-						style="height: 100%; padding-top: 10px;">
-						<p class="text-red" style="margin: 0;">
-							<span class="text-large margin-right">0</span>积分
-						</p>
-
-						<p style="margin: 0;">我的积分
-					</div>
-				</div>
-
-				<div class="x12">
-					<a class="bg-white x12 xl12 height-large margin-top"> <span
-						class="icon-heart text-red text-big margin-big"></span>我的收藏
-					</a> <a class="bg-white x12 xl12 height-large margin-top"> <span
-						class="icon-photo text-blue text-big margin-big"></span>我的收藏
-					</a>
-				</div>
-			</div>
-
 			<div class="fixed-bottom border xl12 hidden-s hidden-m hidden-b"
 				id="bottom-nav"
 				style="width: 100%; background: #efefef; z-index: 1;">
@@ -330,40 +278,47 @@
 				$(".btn-info-edit").hide();
 				$(".btn-info-save").show();
 			})
-			$(".btn-info-save").on("click", function() {
-				$.ajax({
-					url : "user/edit.do",
-					type : "post",
-					data : $("#infoForm").serialize(),
-					dataType : "html",
-					timeput : "10000"
-				}).done(function(data) {
-					var data = eval('(' + data + ')');
-					if (data.msg == 'success') {
-						$("#info-enable").hide();
-						$("#info-disable").show();
-						$(".btn-info-save").hide();
-						$(".btn-info-edit").show();
-						$("#info-disable .password").text(data.user.PASSWORD);
-						$(".realname").text(data.user.REALNAME);
-						if (data.user.SEX == 1) {
-							$("#info-disable .sex").text("男性");
-						} else {
-							$("#info-disable .sex").text("女性");
-						}
-						$("#info-disable .phone").text(data.user.PHONE);
-						$("#info-disable .address").text(data.user.ADDRESS);
-					} else {
-						layer.msg("信息修改失败！", {
-							icon : 7
+			$(".btn-info-save").on(
+					"click",
+					function() {
+						$.ajax({
+							url : "restaurantadmin/edit.do",
+							type : "post",
+							data : $("#infoForm").serialize(),
+							dataType : "html",
+							timeput : "10000"
+						}).done(
+								function(data) {
+									var data = eval('(' + data + ')');
+									if (data.msg == 'success') {
+										$("#info-enable").hide();
+										$("#info-disable").show();
+										$(".btn-info-save").hide();
+										$(".btn-info-edit").show();
+										$("#info-disable .password").text(
+												data.admin.PASSWORD);
+										$(".realname")
+												.text(data.admin.REALNAME);
+										if (data.admin.SEX == 1) {
+											$("#info-disable .sex").text("男性");
+										} else {
+											$("#info-disable .sex").text("女性");
+										}
+										$("#info-disable .phone").text(
+												data.admin.PHONE);
+										$("#info-disable .identitycard").text(
+												data.admin.IDENTITYCARD);
+									} else {
+										layer.msg("信息修改失败！", {
+											icon : 7
+										});
+									}
+								}).error(function() {
+							layer.msg("信息修改请求失败！", {
+								icon : 7
+							});
 						});
-					}
-				}).error(function() {
-					layer.msg("信息修改请求失败！", {
-						icon : 7
-					});
-				});
-			})
+					})
 		})
 	</script>
 </body>
